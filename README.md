@@ -19,10 +19,10 @@ Trabalho avaliativo ministrado pelo Prof. Richard referente a disciplina de Téc
 
 ### Como rodar o projeto
 
-1. Criar um ambiente virtual: `python -m venv venv`
+1. Criar um ambiente virtual: `python -m venv .venv`
 2. Ativar o ambiente virtual: 
-   - Windows: `venv\Scripts\activate`
-   - Linux: `source venv/bin/activate`
+   - Windows: `.venv\Scripts\activate`
+   - Linux: `source .venv/bin/activate`
 3. Instalar as dependências: `pip install -r requirements.txt`
 4. Rodar o projeto: `python main.py`
 
