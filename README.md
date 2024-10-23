@@ -17,6 +17,15 @@ Trabalho avaliativo ministrado pelo Prof. Richard referente a disciplina de Téc
 2. Utilizar o [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) para as mensagens de commit.
 3. Utilizar o fluxo de trabalho gitflow para organização do código.
 
+### Como rodar o projeto
+
+1. Criar um ambiente virtual: `python -m venv venv`
+2. Ativar o ambiente virtual: 
+   - Windows: `venv\Scripts\activate`
+   - Linux: `source venv/bin/activate`
+3. Instalar as dependências: `pip install -r requirements.txt`
+4. Rodar o projeto: `python main.py`
+
 ### Auxiliar
 
 1. Clonar o projeto: `git clone https://github.com/fshinkae/rpg-faculdade.git`
