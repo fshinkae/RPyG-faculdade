@@ -7,6 +7,7 @@
 - [Fabio Henrique Massucatto](https://github.com/fabiomassucatto)
 - [Heitor Santos Cortes](https://github.com/heitorpcrl)
 - [Paulo Henrique Amaral Martins](https://github.com/PauloKT)
+- [Erick da Costa Souza](https://github.com/Erickeffre1332)
 ### Descrição
 
 Trabalho avaliativo ministrado pelo Prof. Richard referente a disciplina de Técnicas de Programação do curso de Análise e Desenvolvimento de Sistemas da faculdades AEMS.
