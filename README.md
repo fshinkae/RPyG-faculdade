@@ -23,8 +23,10 @@ Trabalho avaliativo ministrado pelo Prof. Richard referente a disciplina de Téc
 2. Ativar o ambiente virtual: 
    - Windows: `.venv\Scripts\activate`
    - Linux: `source .venv/bin/activate`
-3. Instalar as dependências: `pip install -r requirements.txt`
-4. Rodar o projeto: `python main.py`
+3. Instalar as dependências:
+   - Windows: `py -m pip install -r requirements.txt`
+   - Linux: `pip install -r requirements.txt`
+5. Rodar o projeto: `python main.py`
 
 ### Auxiliar
 
