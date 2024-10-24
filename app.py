@@ -1,15 +1,16 @@
+import os
+
 from flask import Flask
 import sqlite3
+
+from controllers.character_controller import add_character
 
 app = Flask(__name__)
 
 DATABASE = 'database.db'
 SCHEMA = 'schema.sql'
 
-
-@app.route('/')
-def hello_world():
-    return 'Hello World!'
+app.add_url_rule('/character', 'character_route', add_character, methods=['POST'])
 
 def init_db():
     conn = None
@@ -29,5 +30,6 @@ def init_db():
 
 
 if __name__ == '__main__':
-    init_db()
+    if not os.path.exists(DATABASE):
+        init_db()
     app.run()
