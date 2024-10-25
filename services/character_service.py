@@ -1,4 +1,4 @@
-from models.character_model import add_database_character, get_character_info
+from models import character_model
 
 
 def calculate_attributes(race_id, vocation_id):
@@ -35,8 +35,8 @@ def register_character(name, race_id, vocation_id):
     xp_base = 0
     level_base = 1
     try:
-        character_id = add_database_character(name, race_id, vocation_id, level_base, xp_base, attributes)
-        character_info = get_character_info(character_id)
+        character_id = character_model.register_character(name, race_id, vocation_id, level_base, xp_base, attributes)
+        character_info = character_model.get_character_info(character_id)
         return character_info
     except Exception as e:
         print(f"An error occurred: {e}")
@@ -45,7 +45,27 @@ def register_character(name, race_id, vocation_id):
 
 def get_character_by_id(character_id):
     try:
-        character_info = get_character_info(character_id)
+        character_info = character_model.get_character_info(character_id)
+        return character_info
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        return False
+
+
+def update_character_info(character_id, updates):
+    try:
+        character_model.update_info(character_id, updates)
+        character_info = character_model.get_character_info(character_id)
+        return character_info
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        return False
+
+
+def update_character_attributes(character_id, updates):
+    try:
+        character_model.update_attributes(character_id, updates)
+        character_info = character_model.get_character_info(character_id)
         return character_info
     except Exception as e:
         print(f"An error occurred: {e}")

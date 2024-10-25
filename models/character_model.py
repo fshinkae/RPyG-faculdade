@@ -7,7 +7,7 @@ def get_db_connection():
     return conn
 
 
-def add_database_character(name, race_id, vocation_id, level, xp, attribute):
+def register_character(name, race_id, vocation_id, level, xp, attribute):
     character_query = '''
         INSERT INTO Character (Name, race_id, vocation_id, level, xp, attribute_id)
         VALUES (?, ?, ?, ?, ?, ?)
@@ -60,3 +60,55 @@ def get_character_info(character_id):
         return character_info
     else:
         return None
+
+
+def update_info(character_id, updates):
+    fields = []
+    values = []
+
+    for key, value in updates.items():
+        if value is not None:
+            fields.append(f"{key} = ?")
+            values.append(value)
+
+    if not fields:
+        return False
+
+    values.append(character_id)
+    character_update_query = f'''
+        UPDATE Character
+        SET {", ".join(fields)}
+        WHERE id = ?
+    '''
+
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute(character_update_query, values)
+    conn.commit()
+    conn.close()
+
+
+def update_attributes(character_id, updates):
+    fields = []
+    values = []
+
+    for key, value in updates.items():
+        if value is not None:
+            fields.append(f"{key} = ?")
+            values.append(value)
+
+    if not fields:
+        return False
+
+    values.append(character_id)
+    attributes_update_query = f'''
+        UPDATE Attributes
+        SET {", ".join(fields)}
+        WHERE id = (SELECT attribute_id FROM Character WHERE id = ?)
+    '''
+
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute(attributes_update_query, values)
+    conn.commit()
+    conn.close()
