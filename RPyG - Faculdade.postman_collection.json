@@ -1,0 +1,133 @@
+{
+	"info": {
+		"_postman_id": "9ab5ff2c-0547-40ea-83ec-cd4bd8f287ee",
+		"name": "RPyG - Faculdade",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23680860"
+	},
+	"item": [
+		{
+			"name": "Adicionar Personagem",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n        \"name\": \"Novo Personagem\",\n        \"race_id\": 1,\n        \"vocation_id\": 2\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/character",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"character"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Buscar Personagem",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/character/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"character",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Modificar Informaçoes de Personagem",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n        \"name\": \"Nome Atualizado\",\n        \"race_id\": 2,\n        \"vocation_id\": 3,\n        \"level\": 10,\n        \"xp\": 2000\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/character/1/info",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"character",
+						"1",
+						"info"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Modificar Atributos de Personagem",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n        \"life\": 100,\n        \"attack\": 50,\n        \"defense\": 30,\n        \"dodge\": 20\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/character/1/attributes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"character",
+						"1",
+						"attributes"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
