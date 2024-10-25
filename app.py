@@ -3,14 +3,16 @@ import os
 from flask import Flask
 import sqlite3
 
-from controllers.character_controller import add_character
+from controllers.character_controller import add_character, get_character
 
 app = Flask(__name__)
 
 DATABASE = 'database.db'
 SCHEMA = 'schema.sql'
 
-app.add_url_rule('/character', 'character_route', add_character, methods=['POST'])
+app.add_url_rule('/character', 'add_character', add_character, methods=['POST'])
+app.add_url_rule('/character/<int:character_id>', 'get_character', get_character, methods=['GET'])
+
 
 def init_db():
     conn = None

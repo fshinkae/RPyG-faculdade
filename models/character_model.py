@@ -21,6 +21,42 @@ def add_database_character(name, race_id, vocation_id, level, xp, attribute):
     cursor.execute(attribute_query, (attribute['life'], attribute['attack'], attribute['defense'], attribute['dodge']))
     attribute_id = cursor.lastrowid
     cursor.execute(character_query, (name, race_id, vocation_id, level, xp, attribute_id))
+    character_id = cursor.lastrowid
 
     conn.commit()
     conn.close()
+
+    return character_id
+
+
+def get_character_info(character_id):
+    character_query = '''
+        SELECT c.Name, c.race_id, c.vocation_id, c.level, c.xp, a.life, a.attack, a.defense, a.dodge
+        FROM Character c
+        JOIN Attributes a ON c.attribute_id = a.id
+        WHERE c.id = ?
+    '''
+
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute(character_query, (character_id,))
+    row = cursor.fetchone()
+    conn.close()
+
+    if row:
+        character_info = {
+            "name": row["Name"],
+            "race_id": row["race_id"],
+            "vocation_id": row["vocation_id"],
+            "level": row["level"],
+            "xp": row["xp"],
+            "attributes": {
+                "life": row["life"],
+                "attack": row["attack"],
+                "defense": row["defense"],
+                "dodge": row["dodge"]
+            }
+        }
+        return character_info
+    else:
+        return None

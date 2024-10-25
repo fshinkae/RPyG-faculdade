@@ -1,11 +1,12 @@
 from flask import Flask, request, jsonify
 
-from services.character_service import register_character
+from controllers.Dto.character_dto import character_dto
+from services.character_service import register_character, get_character_by_id
 
 app = Flask(__name__)
 
 
-@app.route('/add_character', methods=['POST'])
+@app.route('/character', methods=['POST'])
 def add_character():
     data = request.get_json()
 
@@ -16,5 +17,21 @@ def add_character():
     race_id = data['race_id']
     vocation_id = data['vocation_id']
 
-    register_character(name, race_id, vocation_id)
-    return jsonify({'message': 'Character added successfully'}), 201
+    character = register_character(name, race_id, vocation_id)
+    character_info = character_dto(character)
+    return jsonify(character_info), 201
+
+
+@app.route('/character/<int:character_id>', methods=['GET'])
+def get_character(character_id):
+    # character_id = request.args.get('character_id')
+
+    if not character_id:
+        return jsonify({'error': 'Character ID is required'}), 400
+
+    character = get_character_by_id(character_id)
+
+    if character is None:
+        return jsonify({'error': 'Character not found'}), 404
+
+    return jsonify(character), 200
