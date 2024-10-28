@@ -3,7 +3,7 @@ import os
 from flask import Flask
 import sqlite3
 
-from controllers import character_controller
+from controllers import character_controller, monster_controllers
 
 app = Flask(__name__)
 
@@ -15,6 +15,8 @@ app.add_url_rule('/character', 'add_character', character_controller.add_charact
 app.add_url_rule('/character/<int:character_id>', 'get_character', character_controller.get_character, methods=['GET'])
 app.add_url_rule('/character/<int:character_id>/info', 'put_character_info', character_controller.put_character_info, methods=['PUT'])
 app.add_url_rule('/character/<int:character_id>/attributes', 'put_character_attributes', character_controller.put_character_attributes, methods=['PUT'])
+app.add_url_rule('/monster', 'add_monster', monster_controllers.add_monster, methods=['POST'])
+app.add_url_rule('/monsters', 'get_all_monsters', monster_controllers.get_all_monsters, methods=['GET'])
 
 
 # Initialize database (don't change this)
