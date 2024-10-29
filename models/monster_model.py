@@ -8,7 +8,7 @@ def get_db_connection():
 
 def register_moster(name, xp, level, attributes):
     monster_query='''
-      INSERT INTO Monster (name, xp, leve_id, attribute_id)
+      INSERT INTO Monster (name, xp, level_id, attribute_id)
       VALUES (?, ?, ?, ?)
 '''
     attribute_query = '''
@@ -29,7 +29,7 @@ def register_moster(name, xp, level, attributes):
 
 def get_monsters():
     monster_query = '''
-    SELECT m.Name, m.ID, m.xp, m.leve_id, a.life, a.attack, a.defense, a.dodge
+    SELECT m.Name, m.ID, m.xp, m.level_id, a.life, a.attack, a.defense, a.dodge
     FROM Monster m
     JOIN Attributes a ON m.attribute_id = a.id
     '''
@@ -45,7 +45,7 @@ def get_monsters():
             "name": row["Name"],
             "ID": row["ID"],
             "xp": row["xp"],
-            "level_id": row["leve_id"],
+            "level_id": row["level_id"],
             "attributes": {
                 "life": row["life"],
                 "attack": row["attack"],

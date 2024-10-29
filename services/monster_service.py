@@ -20,9 +20,10 @@ def calculate_monster_register(level):
         if (level == 4):
              return monster_attributes_level[4]
 
+
 def calculate_monster_xp(level):
-        xp_level = [50, 100, 200, 500]
-        return xp_level[level]
+    xp_level = (50, 100, 200, 500)
+    return xp_level[level - 1]
 
 
 def register_monster(name, level):
