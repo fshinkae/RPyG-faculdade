@@ -1,41 +1,44 @@
 import random
 
-def roll_d20():
-    """Roll d20 dice"""
-    return random.randint(1,20)
-    
-    
-def chest_challenge():
-    """Verify if it's mimic or chest"""
-    result = roll_d20()
-    print (f"Dice result: {result}")
-    
-    if result <=2:
-        print ("WARNING! A mimic has appeared!")
-        return False
-    
-    else:
-        print("It´s a chest! Try to open it.")
-        return True
+from services import character_service
 
-def try_open_chest():
-    """Three chances to open the chest"""
-    
+
+def roll_d20():
+    return random.randint(1, 20)
+
+
+def update_character_status(character_id):
+    character_info = character_service.get_character_by_id(character_id)
+    if character_info:
+        max_health = character_info['attributes']['life']
+        current_health = character_info['attributes']['life']
+        health_potion = max_health * 0.50
+        new_health = min(current_health + health_potion, max_health)
+        character_service.update_character_info(character_id, {'life': new_health})
+
+
+def try_open_chest(character_id):
     tries = 3
     for chance in range(1, tries + 1):
-        print (f"Try: {chance}")
         result = roll_d20()
-        print(f"Rolled D20 dice for open the chest: {result}")
-        
         if result <= 9:
-            print("Fail! You didn´t open the chest")
+            message = f"Fail! You didn't open the chest, {tries - chance} tries remaining!"
+            return message
         else:
-            print("Sucess! You opened the chest!")
-            print("You obtained a health potion !")
-            return True
-            """Add function to up health to + 50%"""
-    
-    print("All chances have been used. The chest is now gone.")
-    return False
+            message = "Success! You opened the chest! You obtained a health potion!"
+            update_character_status(character_id)
+            return message
 
-"""Add function to link to the main app and run the game"""
+    message = "All tries failed! The chest is locked!"
+    return message
+
+
+def chest_challenge(character_id):
+    result = roll_d20()
+    print(f"Dice result: {result}")
+    if result <= 2:
+        print("WARNING! A mimic has appeared!")
+        """Mimic fight (Medium Monster)"""
+        return False
+    else:
+        try_open_chest(character_id)
