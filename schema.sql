@@ -23,13 +23,13 @@ CREATE TABLE Race
 
 CREATE TABLE Vocation
 (
-    id  INTEGER PRIMARY KEY AUTOINCREMENT,
+    id   INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT NOT NULL
 );
 
 CREATE TABLE Character
 (
-    id           INTEGER PRIMARY KEY AUTOINCREMENT,
+    id           INTEGER PRIMARY KEY AUTO_INCREMENT,
     name         TEXT    NOT NULL,
     race_id      INTEGER NOT NULL,
     vocation_id  INTEGER NOT NULL,
@@ -53,30 +53,24 @@ CREATE TABLE Monster
 (
     id           INTEGER PRIMARY KEY AUTOINCREMENT,
     name         TEXT    NOT NULL,
-    level_id      INTEGER NOT NULL,
+    level_id     INTEGER NOT NULL,
     xp           INTEGER NOT NULL,
     attribute_id INTEGER NOT NULL,
-    FOREIGN KEY (level_id) REFERENCES MonsterLevel (id ),
-    FOREIGN KEY (attribute_id) REFERENCES AttributesMonster (id)
+    FOREIGN KEY (level_id) REFERENCES MonsterLevel (id),
+    FOREIGN KEY (attribute_id) REFERENCES Attributes (id)
 );
 
-CREATE TABLE AttributesMonster
-(
-    id      INTEGER PRIMARY KEY AUTOINCREMENT,
-    life    INTEGER NOT NULL,
-    attack  INTEGER NOT NULL,
-    defense INTEGER NOT NULL,
-    dodge   INTEGER NOT NULL
-);
 
 INSERT INTO Race (Name)
 VALUES ('Humano'),
        ('Elfo'),
        ('Anão');
+
 INSERT INTO Vocation (Name)
 VALUES ('Guerreiro'),
        ('Paladino'),
        ('Arqueiro');
+
 INSERT INTO MonsterLevel (Name)
 VALUES ('Fraco'),
        ('Normal'),
