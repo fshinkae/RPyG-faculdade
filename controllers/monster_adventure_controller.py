@@ -38,13 +38,19 @@ def random_monster():
 
 @app.route('/attack', methods=['POST'])
 def handle_attack():
+    global monster_memory
     data = request.json
     character_id = data['character_id']
-    global monster_memory
+
+    if not character_id:
+        return jsonify({'error': 'Character ID is required'}), 404
+
+    character_info = character_service.get_character_by_id(character_id)
+    if not character_info:
+        return jsonify({'error': 'Character not found'}), 404
 
     if monster_memory:
-        attack_result = monster_adventure_service.character_attack(character_id, monster_memory['attributes']['defense'],
-                                                           monster_memory)
+        attack_result = monster_adventure_service.character_attack(character_info, monster_memory)
         if attack_result is None:
             return jsonify({'message': 'Character attack failed'}), 200
 
@@ -52,6 +58,7 @@ def handle_attack():
         if result:
             if monster_memory['attributes']['life'] <= 0:
                 xp = monster_memory['xp']
+                monster_memory.clear()
                 return jsonify({'message': f'Monster is dead, you earned {xp} xp'}), 200
             return jsonify(
                 {'message': f'Attack successful! You dealt {damage} damage.', 'monster': monster_memory}), 200
@@ -62,11 +69,18 @@ def handle_attack():
 
 @app.route('/monster_attack', methods=['POST'])
 def handle_monster_attack():
+    global monster_memory
     data = request.json
     character_id = data['character_id']
-    global monster_memory
+
+    if not character_id:
+        return jsonify({'message': 'Character ID is required'}), 400
+
+    if not monster_memory:
+        return jsonify({'message': 'Monster not found'}), 404
 
     result, damage = monster_adventure_service.monster_attack(character_id, monster_memory)
+
     if result:
         character = character_service.get_character_by_id(character_id)
         if character['attributes']['life'] <= 0:
@@ -81,11 +95,19 @@ def handle_monster_attack():
 def handle_defend():
     data = request.json
     character_id = data['character_id']
-    result, defense = monster_adventure_service.defend_character(character_id)
-    if result:
+
+    if not character_id:
+        return jsonify({'message': 'Character ID is required'}), 400
+
+    character_info = character_service.get_character_by_id(character_id)
+    if not character_info:
+        return jsonify({'message': 'Character not found'}), 404
+
+    result, defense = monster_adventure_service.defend_character(character_info, character_id)
+    if result or defense > 0:
         return jsonify({'message': f'Defense successful, increase you defense is {defense} in next round!',
                         'character': result}), 200
-    return jsonify({'message': 'Character not found'}), 404
+    return jsonify({'message': 'Defense failed'}), 200
 
 
 @app.route('/call_monster', methods=['GET'])
