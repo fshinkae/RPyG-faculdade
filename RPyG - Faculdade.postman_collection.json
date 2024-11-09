@@ -1,11 +1,134 @@
 {
 	"info": {
-		"_postman_id": "9ab5ff2c-0547-40ea-83ec-cd4bd8f287ee",
+		"_postman_id": "ff859a2e-383b-469d-bba0-ec91037611e8",
 		"name": "RPyG - Faculdade",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "23680860"
+		"_exporter_id": "39318711"
 	},
 	"item": [
+		{
+			"name": "monster-adventure",
+			"item": [
+				{
+					"name": "Chamar monstro",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/call_monster",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"call_monster"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Ataque personagem",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"character_id\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/attack",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"attack"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Defesa personagem",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"character_id\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/defend",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"defend"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Ataque monstro",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"character_id\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/monster_attack",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"monster_attack"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
 		{
 			"name": "Adicionar Personagem",
 			"request": {

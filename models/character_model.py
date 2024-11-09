@@ -88,11 +88,11 @@ def update_info(character_id, updates):
     conn.close()
 
 
-def update_attributes(character_id, updates):
+def update_attributes(character_id, attributes):
     fields = []
     values = []
 
-    for key, value in updates.items():
+    for key, value in attributes.items():
         if value is not None:
             fields.append(f"{key} = ?")
             values.append(value)

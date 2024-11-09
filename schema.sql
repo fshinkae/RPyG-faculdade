@@ -14,7 +14,6 @@ CREATE TABLE Attributes
     dodge   INTEGER NOT NULL
 );
 
-
 CREATE TABLE Race
 (
     id   INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -29,25 +28,23 @@ CREATE TABLE Vocation
 
 CREATE TABLE Character
 (
-    id           INTEGER PRIMARY KEY AUTO_INCREMENT,
+    id           INTEGER PRIMARY KEY AUTOINCREMENT,
     name         TEXT    NOT NULL,
     race_id      INTEGER NOT NULL,
     vocation_id  INTEGER NOT NULL,
     level        INTEGER NOT NULL,
     xp           INTEGER NOT NULL,
     attribute_id INTEGER NOT NULL,
-    FOREIGN KEY (race_id) REFERENCES Race (ID),
-    FOREIGN KEY (vocation_id) REFERENCES Vocation (ID),
-    FOREIGN KEY (attribute_id) REFERENCES Attributes (ID)
+    FOREIGN KEY (race_id) REFERENCES Race (id),
+    FOREIGN KEY (vocation_id) REFERENCES Vocation (id),
+    FOREIGN KEY (attribute_id) REFERENCES Attributes (id)
 );
-
 
 CREATE TABLE MonsterLevel
 (
     id   INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT NOT NULL
 );
-
 
 CREATE TABLE Monster
 (
@@ -59,7 +56,6 @@ CREATE TABLE Monster
     FOREIGN KEY (level_id) REFERENCES MonsterLevel (id),
     FOREIGN KEY (attribute_id) REFERENCES Attributes (id)
 );
-
 
 INSERT INTO Race (Name)
 VALUES ('Humano'),
