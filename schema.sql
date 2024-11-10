@@ -72,3 +72,20 @@ VALUES ('Fraco'),
        ('Normal'),
        ('Forte'),
        ('Boss');
+
+
+
+INSERT INTO Attributes (id, life, attack, defense, dodge) VALUES (1, 8, 3, 1, 2);
+INSERT INTO Monster (id, name, level_id, xp, attribute_id) VALUES (1, 'Goblin', 1, 50, 1);
+
+INSERT INTO Attributes (id, life, attack, defense, dodge) VALUES (2, 12, 4, 1, 4);
+INSERT INTO Monster (id, name, level_id, xp, attribute_id) VALUES (2, 'Troll', 2, 100, 2);
+
+INSERT INTO Attributes (id, life, attack, defense, dodge) VALUES (3, 20, 6, 2, 6);
+INSERT INTO Monster (id, name, level_id, xp, attribute_id) VALUES (3, 'Golen', 3, 200, 3);
+
+INSERT INTO Attributes (id, life, attack, defense, dodge) VALUES (4, 45, 10, 5, 8);
+INSERT INTO Monster (id, name, level_id, xp, attribute_id) VALUES (4, 'Dragon', 4, 500, 4);
+
+INSERT INTO Attributes (id, life, attack, defense, dodge) VALUES (5, 12, 4, 1, 4);
+INSERT INTO Monster (id, name, level_id, xp, attribute_id) VALUES (5, 'Mimic', 2, 100, 5);       
