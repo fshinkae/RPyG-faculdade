@@ -58,6 +58,7 @@ def handle_attack():
         if result:
             if monster_memory['attributes']['life'] <= 0:
                 xp = monster_memory['xp']
+                character_service.gain_experience(character_id, xp)
                 monster_memory.clear()
                 return jsonify({'message': f'Monster is dead, you earned {xp} xp'}), 200
             return jsonify(
