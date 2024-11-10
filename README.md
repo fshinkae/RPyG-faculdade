@@ -28,11 +28,11 @@ Trabalho avaliativo ministrado pelo Prof. Richard referente a disciplina de Téc
 3. Instalar as dependências:
    - Windows: `py -m pip install -r requirements.txt`
    - Linux: `pip install -r requirements.txt`
-5. Rodar o projeto: `python main.py`
+5. Rodar o projeto: `python app.py`
 
 ### Auxiliar
 
-1. Clonar o projeto: `git clone https://github.com/fshinkae/rpg-faculdade.git`
+1. Clonar o projeto: `git clone git@github.com:fshinkae/RPyG-faculdade.git`
    a. Atualizar Branch: `git pull`
 2. Criar uma nova branch: `git checkout -b feature/nome-da-branch`
 3. Atualizar o projeto: `git pull`
