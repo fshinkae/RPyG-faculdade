@@ -72,6 +72,33 @@ def update_character_attributes(character_id, updates):
         return False
 
 
+def calculate_exp_for_next_level(current_level):
+    if current_level == 1:
+        return 100
+    else:
+        return int(100 * (1.4 ** (current_level - 1)))
+
+
+def gain_experience(character_id, exp_gained):
+    character_info = get_character_by_id(character_id)
+    if not character_info:
+        return "Character not found."
+
+    current_exp = character_info['xp']
+    current_level = character_info['level']
+    new_exp = current_exp + exp_gained
+
+    exp_for_next_level = calculate_exp_for_next_level(current_level)
+    if new_exp >= exp_for_next_level:
+        new_level = current_level + 1
+        new_exp -= exp_for_next_level
+        new_attributes = {attr: int(value * 1.5) for attr, value in character_info['attributes'].items()}
+        update_character_attributes(character_id, {'level': new_level, 'xp': new_exp, 'attributes': new_attributes})
+        return f"Level up! New level: {new_level}"
+    else:
+        update_character_attributes(character_id, {'xp': new_exp})
+        return f"Experience gained: {exp_gained}. Total experience: {new_exp}"
+
 
 def calculate_exp_for_next_level(current_level):
     if current_level == 1:

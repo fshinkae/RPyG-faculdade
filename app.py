@@ -3,7 +3,9 @@ import os
 from flask import Flask
 import sqlite3
 
-from controllers import character_controller, monster_adventure_controller, monster_controllers
+from controllers import character_controller, monster_adventure_controller, monster_controllers, \
+    chest_adventure_controller
+from services import chest_adventure_service
 
 app = Flask(__name__)
 
@@ -17,6 +19,10 @@ app.add_url_rule('/character/<int:character_id>/info', 'put_character_info', cha
 app.add_url_rule('/character/<int:character_id>/attributes', 'put_character_attributes', character_controller.put_character_attributes, methods=['PUT'])
 app.add_url_rule('/monster', 'add_monster', monster_controllers.add_monster, methods=['POST'])
 app.add_url_rule('/monsters', 'get_all_monsters', monster_controllers.get_all_monsters, methods=['GET'])
+
+# Chest Routes
+app.add_url_rule('/chest/open', 'chest_adventure', chest_adventure_controller.chest_adventure, methods=['POST'])
+app.add_url_rule('/chest/call_mimic', 'call_mimic_monster', monster_adventure_controller.call_mimic_monster, methods=['POST'])
 
 # Monster Adventure Routes
 app.add_url_rule('/attack', 'handle_attack', monster_adventure_controller.handle_attack, methods=['POST'])
