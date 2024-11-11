@@ -5,10 +5,12 @@ from services import chest_adventure_service
 app = Flask(__name__)
 
 
-@app.route('/chest/<int:character_id>/', methods=['POST'])
-def chest_adventure(character_id):
+@app.route('/chest/open', methods=['POST'])
+def chest_adventure():
+    data = request.json
+    character_id = data['character_id']
     if not character_id:
         return jsonify({'error': 'Character ID is required'}), 400
 
-    message = chest_adventure_service.chest_challenge(character_id)
-    return jsonify({'message': message}), 200
+    message = chest_adventure_service.try_open_chest(character_id)
+    return message, 200
