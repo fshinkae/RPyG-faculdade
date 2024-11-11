@@ -72,7 +72,6 @@ def update_character_attributes(character_id, updates):
         return False
 
 
-
 def calculate_exp_for_next_level(current_level):
     if current_level == 1:
         return 100

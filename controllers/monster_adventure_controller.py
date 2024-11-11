@@ -27,13 +27,19 @@ def random_monster():
     if 1 <= dice <= 8:
         monster = next(monster for monster in monsters if monster["level_id"] == 1)
     elif 9 <= dice <= 14:
-        monster = next(monster for monster in monsters if monster["level_id"] == 2)
+        monster = next(monster for monster in monsters if monster["level_id"] == 2 and monster["name"] != "Mimic")
     elif 15 <= dice <= 18:
         monster = next(monster for monster in monsters if monster["level_id"] == 3)
     elif 19 <= dice <= 20:
         monster = next(monster for monster in monsters if monster["level_id"] == 4)
     monster_memory = monster
     return monster
+
+def mimic_monster():
+    global monster_memory
+    monsters = get_monsters()
+    monster = next(monster for monster in monsters if monster["name"] == "Mimic")
+    monster_memory = monster
 
 
 @app.route('/attack', methods=['POST'])
@@ -117,7 +123,19 @@ def call_random_monster():
     if monster_memory:
         if monster_memory['attributes']['life'] <= 0:
             monster = random_monster()
-            return jsonify({'message': 'Monster created', 'monster': monster}), 200
+            return jsonify({'message': f'The {monster["name"]} Appear! Prepare to Battle!!!', 'monster': monster}), 200
         return jsonify({'message': 'Monster already exists', 'monster': monster_memory}), 200
     monster = random_monster()
+    return jsonify({'message': 'Monster created', 'monster': monster}), 200
+
+
+@app.route('/call_mimic', methods=['GET'])
+def call_mimic_monster():
+    global monster_memory
+    if monster_memory:
+        if monster_memory['attributes']['life'] <= 0:
+            monster = mimic_monster()
+            return jsonify({'message': f'The {monster["name"]} Appear! Prepare to battle', 'monster': monster}), 200
+        return jsonify({'message': 'Monster already exists', 'monster': monster_memory}), 200
+    monster = mimic_monster()
     return jsonify({'message': 'Monster created', 'monster': monster}), 200
