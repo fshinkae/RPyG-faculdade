@@ -1,6 +1,6 @@
 import os
 
-from flask import Flask
+from flask import Flask, render_template, send_file, send_from_directory
 import sqlite3
 
 from controllers import character_controller, monster_adventure_controller, monster_controllers, \
@@ -47,9 +47,29 @@ def init_db():
         if conn:
             conn.close()
 
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+@app.route('/script.js')
+def script():
+    return send_file('templates/script.js')
+
+@app.route('/style.css')
+def style():
+    return send_file('templates/style.css')
+
+@app.route('/images/<path:path>')
+def send_image(path):
+    return send_from_directory('templates/images', path)
 
 # Initialize app (don't change this)
 if __name__ == '__main__':
     if not os.path.exists(DATABASE):
         init_db()
     app.run()
+
+
+
+
+

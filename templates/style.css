@@ -1,0 +1,115 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+body {
+    font-family: 'Press Start 2P', cursive;
+    background-color: #000800;
+    color: #ffffff;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+h1, h2 {
+    color: #ffffff;
+    text-shadow: 1px 1px #000000;
+}
+
+#intro, #chooseClass, #characterSheet {
+    border: 3px solid #ffffff;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 10px auto;
+    max-width: 600px;
+    background-color: #003115;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+}
+
+#classes {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.class {
+    margin: 10px;
+    text-align: center;
+    cursor: pointer;
+    position: relative;
+}
+
+.class-box {
+    border: 2px solid #ffffff;
+    border-radius: 10px;
+    padding: 10px;
+    background-color: #003115;
+    transition: transform 0.3s;
+}
+
+.class-box:hover {
+    transform: scale(1.05);
+}
+
+.class img {
+    width: 100px;
+    height: 100px;
+}
+
+.attributes {
+    display: none;
+    position: absolute;
+    background-color: rgba(102, 204, 102, 0.8);
+    color: #003300;
+    padding: 5px;
+    border-radius: 5px;
+    z-index: 10;
+}
+
+.class:hover .attributes {
+    display: block;
+}
+
+input[type="text"] {
+    width: calc(100% - 22px);
+    padding: 10px;
+    border: 2px solid #ffffff;
+    border-radius: 5px;
+    background-color: #005900;
+    color: #ffffff;
+}
+
+button {
+    background-color: #ffffff;
+    color: #003300;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #80e080;
+}
+
+table {
+    border-collapse: collapse;
+    margin-top: 20px;
+    width: 100%;
+}
+
+th, td {
+    border: 2px solid #66cc66;
+    padding: 10px;
+    text-align: left;
+    color: #ffffff;
+}
+
+th {
+    background-color: #66cc66;
+    color: #003300;
+    text-shadow: 1px 1px #000000;
+}
