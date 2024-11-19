@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Desafio da Luta</title>
+  <link rel="stylesheet" href="fight_adventure.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Desafio da Luta</h1>
+    <div id="fight">
+      <p>Você encontrou um inimigo! Prepare-se para a luta.</p>
+      <div id="playerStats">
+        <p>Saúde do Jogador: <span id="playerHealth">100</span></p>
+        <p>Saúde do Inimigo: <span id="enemyHealth">100</span></p>
+      </div>
+      <button id="attackButton">Atacar!</button>
+      <p id="result"></p>
+    </div>
+    <button id="backToMenu" onclick="window.location.href = 'index.html';">Voltar ao Menu Inicial</button>
+  </div>
+  <script src="fight_adventure.js"></script>
+</body>
+</html>
