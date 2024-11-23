@@ -52,6 +52,7 @@ def character_attack(character_info, monster):
                 else:
                     damage = attack - defense_monster
                     monster['attributes']['life'] -= damage
+                return_defend_state(character_info)
                 return monster, damage
             else:
                 return None, 0
@@ -69,25 +70,21 @@ def monster_attack(character_id, monster):
     attack = dice + monster['attributes']['attack']
 
     if not dodge_character(character_info, monster):
-        if attack >= defense:
+        if attack > defense:
             if dice == 20:
                 damage = (monster['attributes']['attack'] * 2) - defense
             else:
                 damage = monster['attributes']['attack'] - defense
 
-            character_info['attributes']['life'] -= damage
-
-            if defense_buff_active:
-                character_info['attributes']['defense'] -= 5
-                character_service.update_character_attributes(character_id, character_info['attributes'])
-                defense_buff_active = False
-
+            damage = max(0, damage)
+            print(character_info['attributes']['life'], 'antes')
+            character_info['attributes']['life'] = max(0, character_info['attributes']['life'] - damage)
+            print(character_info['attributes']['life'], 'depois')
             result = character_service.update_character_attributes(character_id, character_info['attributes'])
             return result, damage
         else:
             return None, 0
     return None, 0
-
 
 def defend_character(character_info, character_id):
 
@@ -99,3 +96,12 @@ def defend_character(character_info, character_id):
     character_service.update_character_attributes(character_id, character_info['attributes'])
     defense_buff_active = True
     return character_info, character_info['attributes']['defense']
+
+
+def return_defend_state(character_info):
+    global defense_buff_active
+    print(defense_buff_active)
+    if defense_buff_active:
+        character_info['attributes']['defense'] -= 5
+        character_service.update_character_attributes(character_info['id'], character_info['attributes'])
+        defense_buff_active = False

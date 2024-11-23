@@ -14,8 +14,8 @@ def add_character():
         return jsonify({'error': 'Missing required fields'}), 400
 
     name = data['name']
-    race_id = data['race_id']
-    vocation_id = data['vocation_id']
+    race_id = int(data['race_id'])
+    vocation_id = int(data['vocation_id'])
 
     character = character_service.register_character(name, race_id, vocation_id)
     character_info = character_dto.character_dto(character)

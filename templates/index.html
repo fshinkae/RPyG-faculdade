@@ -7,112 +7,26 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1 id="gameTitle">Eldoria</h1>
-    
-    <div id="intro">
-        <p>Eu sou Fabin, o espírito da natureza, por favor herói, me diga seu nome...</p>
-        <input type="text" id="playerName" placeholder="Digite seu nome">
-        <button onclick="confirmName()">Confirmar</button>
-    </div>
+<h1 id="gameTitle">Eldoria</h1>
 
-    <div id="chooseClass" style="display:none;">
-        <p>Fabin: Qual classe você vai querer ser?</p>
-        <div id="classes">
-            <div class="class" onclick="chooseClass('Paladino', 'images/vocation/paladin.png', 7, 7, 5);">
-                <div class="class-box">
-                    <img src="images/vocation/paladin.png" alt="Paladino">
-                    <p>Paladino</p>
-                    <div class="attributes">Atributos: Ataque: 7, Defesa: 7, Magia: 5</div>
-                </div>
-            </div>
-            <div class="class" onclick="chooseClass('Arqueiro', 'images/vocation/archer.png', 8, 4, 9);">
-                <div class="class-box">
-                    <img src="images/vocation/archer.png" alt="Arqueiro">
-                    <p>Arqueiro</p>
-                    <div class="attributes">Atributos: Ataque: 8, Defesa: 4, Agilidade: 9</div>
-                </div>
-            </div>
-            <div class="class" onclick="chooseClass('Guerreiro', 'images/vocation/warrior.png', 9, 8, 6);">
-                <div class="class-box">
-                    <img src="images/vocation/warrior.png" alt="Guerreiro">
-                    <p>Guerreiro</p>
-                    <div class="attributes">Atributos: Ataque: 9, Defesa: 8, Resistência: 6</div>
-                </div>
-            </div>
-        </div>
-    </div>
+<div id="intro">
+    <p>Eu sou Fabin, o espírito da natureza, por favor herói, me diga seu nome...</p>
+    <form id="characterForm">
+        <input type="text" id="playerName" name="name" placeholder="Digite seu nome" required>
+        <select id="race" name="race_id" required>
+            <option value="1">Humano</option>
+            <option value="2">Elfo</option>
+            <option value="3">Anão</option>
+        </select>
+        <select id="vocation" name="vocation_id" required>
+            <option value="1">Paladino</option>
+            <option value="2">Arqueiro</option>
+            <option value="3">Guerreiro</option>
+        </select>
+        <button type="submit">Confirmar</button>
+    </form>
+</div>
 
-    <div id="chooseRace" style="display:none;">
-        <p>Fabin: Escolha sua raça:</p>
-        <div id="races">
-            <div class="race" onclick="showCharacterSheet('Humano');">
-                <div class="race-box">
-                    <img src="images/breed/human.png" alt="Humano">
-                    <p>Humano</p>
-                </div>
-            </div>
-            <div class="race" onclick="showCharacterSheet('Elfo');">
-                <div class="race-box">
-                    <img src="images/breed/elf.png" alt="Elfo">
-                    <p>Elfo</p>
-                </div>
-            </div>
-            <div class="race" onclick="showCharacterSheet('Anão');">
-                <div class="race-box">
-                    <img src="images/breed/dwarf.png" alt="Anão">
-                    <p>Anão</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div id="characterSheet" style="display:none;">
-        <h2>Fabin: Aqui está, <span id="characterName"></span>, esta é sua ficha</h2>
-        <div style="display: flex; justify-content: center; align-items: flex-start;">
-            <img id="characterImage" src="" alt="Classe" style="width: 200px; height: 200px; margin-right: 20px;">
-            <table>
-                <tr>
-                    <th>Atributo</th>
-                    <th>Valor</th>
-                </tr>
-                <tr>
-                    <td>Classe</td>
-                    <td id="classValue">N/A</td>
-                </tr>
-                <tr>
-                    <td>Raça</td>
-                    <td id="raceValue">N/A</td>
-                </tr>
-                <tr>
-                    <td>Ataque</td>
-                    <td id="attackValue">N/A</td>
-                </tr>
-                <tr>
-                    <td>Defesa</td>
-                    <td id="defenseValue">N/A</td>
-                </tr>
-                <tr>
-                    <td>Magia</td>
-                    <td id="magicValue">N/A</td>
-                </tr>
-                <tr>
-                    <td>Saúde</td>
-                    <td id="healthValue">100</td>
-                </tr>
-                <tr>
-                    <td>XP</td>
-                    <td id="xpValue">0</td>
-                </tr>
-                <tr>
-                    <td>Nível</td>
-                    <td id="levelValue">1</td>
-                </tr>
-            </table>
-        </div>
-        <button onclick="startAdventure()">Deseja começar a aventura?</button>
-    </div>
-
-    <script src="script.js"></script>
-
+<script src="script.js"></script>
 </body>
 </html>

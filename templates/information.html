@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Informações do Personagem</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+<h1>Informações do Personagem</h1>
+<table id="characterInfo">
+    <tr>
+        <th>Nome</th>
+        <td id="characterName"></td>
+    </tr>
+    <tr>
+        <th>Raça</th>
+        <td id="characterRace"></td>
+    </tr>
+    <tr>
+        <th>Vocação</th>
+        <td id="characterVocation"></td>
+    </tr>
+    <tr>
+        <th>Nível</th>
+        <td id="characterLevel"></td>
+    </tr>
+    <tr>
+        <th>XP</th>
+        <td id="characterXP"></td>
+    </tr>
+    <tr>
+        <th>Vida</th>
+        <td id="characterLife"></td>
+    </tr>
+    <tr>
+        <th>Ataque</th>
+        <td id="characterAttack"></td>
+    </tr>
+    <tr>
+        <th>Defesa</th>
+        <td id="characterDefense"></td>
+    </tr>
+    <tr>
+        <th>Esquiva</th>
+        <td id="characterDodge"></td>
+    </tr>
+</table>
+<button onclick="startAdventure()">Iniciar Aventura</button>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        loadCharacterData();
+    });
+
+    function loadCharacterData() {
+        const characterId = localStorage.getItem('characterId');
+        if (characterId) {
+            fetch(`http://127.0.0.1:5000/character/${characterId}`)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('characterName').textContent = data.name;
+                    document.getElementById('characterRace').textContent = data.race_id;
+                    document.getElementById('characterVocation').textContent = data.vocation_id;
+                    document.getElementById('characterLevel').textContent = data.level;
+                    document.getElementById('characterXP').textContent = data.xp;
+                    document.getElementById('characterLife').textContent = data.attributes.life;
+                    document.getElementById('characterAttack').textContent = data.attributes.attack;
+                    document.getElementById('characterDefense').textContent = data.attributes.defense;
+                    document.getElementById('characterDodge').textContent = data.attributes.dodge;
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        } else {
+            console.error('No character ID found in localStorage');
+        }
+    }
+
+    function startAdventure() {
+        const randomChallenge = Math.floor(Math.random() * 20) + 1;
+        if (randomChallenge >= 1 && randomChallenge <= 4) {
+            window.location.href = "chest_adventure";
+        } else {
+            window.location.href = "monster_adventure";
+        }
+    }
+</script>
+</body>
+
+</html>

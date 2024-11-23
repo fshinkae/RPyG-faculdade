@@ -35,11 +35,12 @@ def random_monster():
     monster_memory = monster
     return monster
 
+
 def mimic_monster():
     global monster_memory
     monsters = get_monsters()
     monster = next(monster for monster in monsters if monster["name"] == "Mimic")
-    monster_memory = monster
+    return monster
 
 
 @app.route('/attack', methods=['POST'])
@@ -66,7 +67,7 @@ def handle_attack():
                 xp = monster_memory['xp']
                 character_service.gain_experience(character_id, xp)
                 monster_memory.clear()
-                return jsonify({'message': f'Monster is dead, you earned {xp} xp'}), 200
+                return jsonify({'message': f'Monster is dead, you earned {xp} xp', 'monster': monster_memory, }), 200
             return jsonify(
                 {'message': f'Attack successful! You dealt {damage} damage.', 'monster': monster_memory}), 200
         else:
@@ -93,7 +94,8 @@ def handle_monster_attack():
         if character['attributes']['life'] <= 0:
             return jsonify({'message': 'You are dead!!!'}), 200
 
-        return jsonify({'message': f'The monster attacked successfully! You took {damage} damage.', 'character': character}), 200
+        return jsonify(
+            {'message': f'The monster attacked successfully! You took {damage} damage.', 'character': character}), 200
     else:
         return jsonify({'message': 'The monster attack missed', 'monster': monster_memory}), 200
 
@@ -101,7 +103,7 @@ def handle_monster_attack():
 @app.route('/defend', methods=['POST'])
 def handle_defend():
     data = request.json
-    character_id = data['character_id']
+    character_id = int(data['character_id'])
 
     if not character_id:
         return jsonify({'message': 'Character ID is required'}), 400
@@ -120,22 +122,14 @@ def handle_defend():
 @app.route('/call_monster', methods=['GET'])
 def call_random_monster():
     global monster_memory
-    if monster_memory:
-        if monster_memory['attributes']['life'] <= 0:
-            monster = random_monster()
-            return jsonify({'message': f'The {monster["name"]} Appear! Prepare to Battle!!!', 'monster': monster}), 200
-        return jsonify({'message': 'Monster already exists', 'monster': monster_memory}), 200
     monster = random_monster()
-    return jsonify({'message': 'Monster created', 'monster': monster}), 200
+    monster_memory = monster
+    return jsonify({'message': f'The {monster["name"]} Appear! Prepare to Battle!!!', 'monster': monster}), 200
 
 
 @app.route('/call_mimic', methods=['GET'])
 def call_mimic_monster():
     global monster_memory
-    if monster_memory:
-        if monster_memory['attributes']['life'] <= 0:
-            monster = mimic_monster()
-            return jsonify({'message': f'The {monster["name"]} Appear! Prepare to battle', 'monster': monster}), 200
-        return jsonify({'message': 'Monster already exists', 'monster': monster_memory}), 200
     monster = mimic_monster()
-    return jsonify({'message': 'Monster created', 'monster': monster}), 200
+    monster_memory = monster
+    return jsonify({'message': 'Monster created', 'monster': monster_memory}), 200
