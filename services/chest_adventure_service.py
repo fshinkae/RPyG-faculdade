@@ -10,6 +10,7 @@ remaining_tries = 3
 def roll_d20():
     return random.randint(1, 20)
 
+
 def life_dice():
     dice = roll_d20()
     if 1 <= dice <= 15:
@@ -32,16 +33,32 @@ def try_open_chest(character_id):
     global remaining_tries
     for chance in range(1, remaining_tries + 1):
         result = roll_d20()
+
         if result <= 9:
             remaining_tries -= 1
-            message = jsonify({'message': f"Fail! You didn't open the chest, {remaining_tries} tries remaining!"})
+            message = jsonify({'message': f"Fail! You didn't open the chest, {remaining_tries} tries remaining!",
+                               'remaining_tries': remaining_tries,
+                               'chest_status': 'locked'})
             return message
         else:
-            life = update_character_status_chest(character_id)
-            remaining_tries = 3
-            message = jsonify({'message': f"Success! You opened the chest and recovered your health to {life}!"})
-            return message
+            mimic_dice = roll_d20()
+            if (mimic_dice >= 1) and (mimic_dice <= 2):
+                message = jsonify({'message': "Success! You opened the chest and MIMIC appear, prepare for battle!",
+                                   'remaining_tries': remaining_tries,
+                                   'chest_status': 'monster'})
+                return message
+            else:
+                life = update_character_status_chest(character_id)
+                remaining_tries = 3
+                message = jsonify({'message': f"Success! You opened the chest and recovered your health to {life}!",
+                               'remaining_tries': remaining_tries,
+                               'chest_status': 'open'})
+                return message
 
-    message = jsonify({"All tries failed! The chest is locked!"})
+    message = jsonify({
+        "message": "All tries failed! The chest is locked!",
+        'remaining_tries': remaining_tries,
+        'chest_status': 'locked'
+    })
     remaining_tries = 3
     return message

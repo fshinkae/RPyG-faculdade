@@ -93,8 +93,9 @@ def gain_experience(character_id, exp_gained):
         new_level = current_level + 1
         new_exp -= exp_for_next_level
         new_attributes = {attr: int(value * 1.5) for attr, value in character_info['attributes'].items()}
-        update_character_attributes(character_id, {'level': new_level, 'xp': new_exp, 'attributes': new_attributes})
+        update_character_attributes(character_id, new_attributes)
+        update_character_info(character_id, {'level': new_level, 'xp': new_exp})
         return f"Level up! New level: {new_level}"
     else:
-        update_character_attributes(character_id, {'xp': new_exp})
+        update_character_info(character_id, {'xp': new_exp})
         return f"Experience gained: {exp_gained}. Total experience: {new_exp}"

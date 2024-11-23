@@ -1,18 +1,31 @@
-let playerName = '';
+document.getElementById('characterForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+    submitCharacterForm();
+});
 
-        function confirmName() {
-            playerName = document.getElementById('playerName').value;
-            document.getElementById('chooseClass').style.display = 'block'; 
-            document.getElementById('intro').style.display = 'none';
-        }
+function submitCharacterForm() {
+    const name = document.getElementById('playerName').value;
+    const raceId = document.getElementById('race').value;
+    const vocationId = document.getElementById('vocation').value;
 
-        function showCharacterSheet(characterClass, image, attack, defense, magic) {
-            document.getElementById('characterName').innerText = playerName;
-            document.getElementById('characterClass').innerText = characterClass;
-            document.getElementById('characterImage').src = image;
-            document.getElementById('attackValue').innerText = attack;
-            document.getElementById('defenseValue').innerText = defense;
-            document.getElementById('magicValue').innerText = magic;
-            document.getElementById('chooseClass').style.display = 'none';
-            document.getElementById('characterSheet').style.display = 'block';
+    const characterData = {
+        name: name,
+        race_id: parseInt(raceId),
+        vocation_id: parseInt(vocationId)
+    };
+
+    fetch('http://127.0.0.1:5000/character', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(characterData)
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Success:', data);
+        localStorage.setItem('characterId', data.id);
+        window.location.href = 'information';
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+    });
 }

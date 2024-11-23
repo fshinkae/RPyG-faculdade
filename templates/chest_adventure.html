@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Desafio do Baú</title>
+    <link rel="stylesheet" href="chest_adventure.css">
+</head>
+<body>
+<div class="container">
+    <h1>Desafio do Baú</h1>
+    <div class="chest" id="chest"></div>
+    <p id="instructions">Fabin: Clique no botão para rolar o dado!</p>
+    <button id="rollDice">Rolar Dado</button>
+    <p id="result"></p>
+    <p id="lives">Vidas restantes: <span id="lives-count">3</span></p>
+    <button id="backToMenu" onclick="window.location.href = 'information';">Voltar ao Menu Inicial</button>
+</div>
+<script>
+    document.getElementById('rollDice').addEventListener('click', function () {
+        const characterId = localStorage.getItem('characterId');
+        if (!characterId) {
+            console.error('No character ID found in localStorage');
+            return;
+        }
+        fetch('http://localhost:5000/chest/open', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({character_id: characterId})
+        })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('result').textContent = data.message;
+                document.getElementById('lives-count').textContent = data.remaining_tries;
+
+                if (data.chest_status === 'monster') {
+                    alert('Um monstro apareceu!');
+                    localStorage.setItem('mimic', true);
+                    window.location.href = 'monster_adventure';
+                }
+
+                if (data.chest_status === 'open' || data.chest_status === 'locked' && data.remaining_tries === 0) {
+                    document.getElementById('rollDice').disabled = true;
+                }
+            })
+            .catch(error => console.error('Error:', error));
+    });
+</script>
+</body>
+</html>

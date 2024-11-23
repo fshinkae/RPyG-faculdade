@@ -2,56 +2,62 @@
 
 body {
     font-family: 'Press Start 2P', cursive;
-    background-color: #000800;
-    color: #ffffff;
+    background-image: url('images/backgrounds/castle.png');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    color: #000000;
     margin: 0;
-    padding: 20px;
+    padding: 150px 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-h1, h2 {
-    color: #ffffff;
+#gameTitle {
+    color: #ffbb00;
     text-shadow: 1px 1px #000000;
+    font-size: 3em;
+    text-align: center;
+    margin-bottom: 20px;
 }
 
-#intro, #chooseClass, #characterSheet {
-    border: 3px solid #ffffff;
+#intro, #chooseClass, #chooseRace, #characterSheet {
+    border: 3px solid #000000;
     border-radius: 10px;
     padding: 20px;
     margin: 10px auto;
     max-width: 600px;
-    background-color: #003115;
+    background-color: rgba(255, 255, 255, 0.7);
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
 }
 
-#classes {
+#classes, #races {
     display: flex;
     justify-content: space-around;
     flex-wrap: wrap;
 }
 
-.class {
+.class, .race {
     margin: 10px;
     text-align: center;
     cursor: pointer;
     position: relative;
 }
 
-.class-box {
-    border: 2px solid #ffffff;
+.class-box, .race-box {
+    border: 2px solid #000000;
     border-radius: 10px;
     padding: 10px;
-    background-color: #003115;
+    background-color: rgba(255, 255, 255, 0.7);
     transition: transform 0.3s;
 }
 
-.class-box:hover {
+.class-box:hover, .race-box:hover {
     transform: scale(1.05);
 }
 
-.class img {
+.class img, .race img {
     width: 100px;
     height: 100px;
 }
@@ -59,8 +65,8 @@ h1, h2 {
 .attributes {
     display: none;
     position: absolute;
-    background-color: rgba(102, 204, 102, 0.8);
-    color: #003300;
+    background-color: rgba(77, 77, 77, 0.8);
+    color: #000000;
     padding: 5px;
     border-radius: 5px;
     z-index: 10;
@@ -75,13 +81,13 @@ input[type="text"] {
     padding: 10px;
     border: 2px solid #ffffff;
     border-radius: 5px;
-    background-color: #005900;
+    background-color: #000000;
     color: #ffffff;
 }
 
 button {
     background-color: #ffffff;
-    color: #003300;
+    color: #000000;
     padding: 10px 15px;
     border: none;
     border-radius: 5px;
@@ -92,7 +98,7 @@ button {
 }
 
 button:hover {
-    background-color: #80e080;
+    background-color: #999999;
 }
 
 table {
@@ -102,14 +108,14 @@ table {
 }
 
 th, td {
-    border: 2px solid #66cc66;
+    border: 2px solid #000000;
     padding: 10px;
     text-align: left;
-    color: #ffffff;
+    color: #000000;
 }
 
 th {
-    background-color: #66cc66;
-    color: #003300;
-    text-shadow: 1px 1px #000000;
+    background-color: #cfcfcf;
+    color: #000000;
+    text-shadow: 1px 1px #000000;
 }

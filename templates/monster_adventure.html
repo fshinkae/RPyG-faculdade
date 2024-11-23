@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Desafio da Luta</title>
+    <link rel="stylesheet" href="monster_adventure.css">
+</head>
+<body>
+<div class="container">
+    <h1>Desafio da Luta</h1>
+    <div id="fight">
+        <p>Você encontrou um inimigo! Prepare-se para a luta.</p>
+        <div id="statsContainer">
+            <div id="monsterStats">
+                <h2>Monstro</h2>
+                <p>Nome: <span id="monsterName"></span></p>
+                <p>Vida: <span id="monsterHealth"></span></p>
+                <p>Ataque: <span id="monsterAttack"></span></p>
+                <p>Defesa: <span id="monsterDefense"></span></p>
+                <p>Esquiva: <span id="monsterDodge"></span></p>
+            </div>
+            <div id="characterStats">
+                <h2>Personagem</h2>
+                <p>Nome: <span id="characterName"></span></p>
+                <p>Vida: <span id="characterHealth"></span></p>
+                <p>Ataque: <span id="characterAttack"></span></p>
+                <p>Defesa: <span id="characterDefense"></span></p>
+                <p>Esquiva: <span id="characterDodge"></span></p>
+            </div>
+        </div>
+        <button id="attackButton">Atacar</button>
+        <button id="defendButton">Defender</button>
+        <button id="dodgeButton">Fugir</button>
+        <p id="result"></p>
+        <ul id="battleLog"></ul>
+    </div>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        initializeBattle();
+    });
+
+    function initializeBattle() {
+        clearBattleLog();
+        fetchMonsterData();
+        fetchCharacterData();
+        loadBattleLog();
+    }
+
+function fetchMonsterData() {
+    const isMimic = localStorage.getItem('mimic') === 'true';
+    const endpoint = isMimic ? 'http://localhost:5000/chest/call_mimic' : 'http://localhost:5000/call_monster';
+
+    fetch(endpoint)
+        .then(response => response.json())
+        .then(data => {
+            updateMonsterStats(data.monster);
+            if (isMimic) {
+                localStorage.removeItem('mimic');
+            }
+        })
+        .catch(error => console.error('Error:', error));
+}
+    function fetchCharacterData() {
+        const characterId = localStorage.getItem('characterId');
+        fetch(`http://localhost:5000/character/${characterId}`)
+            .then(response => response.json())
+            .then(data => updateCharacterStats(data))
+            .catch(error => console.error('Error:', error));
+    }
+
+    document.getElementById('dodgeButton').addEventListener('click', function () {
+        handleDodgeAction();
+    });
+
+    document.getElementById('attackButton').addEventListener('click', function () {
+        handleAttackAction();
+    });
+
+    document.getElementById('defendButton').addEventListener('click', function () {
+        handleDefendAction();
+    });
+
+    function handleDodgeAction() {
+        const characterId = localStorage.getItem('characterId');
+        fetch(`http://localhost:5000/character/${characterId}`)
+            .then(response => response.json())
+            .then(data => {
+                const playerDodge = data.attributes.dodge;
+                const playerRoll = rollD20() + playerDodge;
+                const successRoll = rollD20();
+
+                if (playerRoll > successRoll) {
+                    window.location.href = 'information';
+                } else {
+                    const message = 'Fuga falhou! Prepare-se!';
+                    document.getElementById('result').textContent = message;
+                    updateBattleLog(message);
+                }
+            })
+            .catch(error => console.error('Error:', error));
+    }
+
+    function handleAttackAction() {
+        const characterId = localStorage.getItem('characterId');
+        fetch('http://localhost:5000/attack', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({character_id: characterId})
+        })
+            .then(response => response.json())
+            .then(data => {
+                const message = data.message;
+                document.getElementById('result').textContent = message;
+                updateBattleLog(message, 'Herói');
+                updateMonsterStats(data.monster);
+                fetchCharacterData()
+                monsterAttack(characterId);
+
+            })
+            .catch(error => console.error('Error:', error));
+    }
+
+    function handleDefendAction() {
+        const characterId = localStorage.getItem('characterId');
+        fetch('http://localhost:5000/defend', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({character_id: characterId})
+        })
+            .then(response => response.json())
+            .then(data => {
+                const message = data.message;
+                document.getElementById('result').textContent = message;
+                updateBattleLog(message, 'Herói');
+                fetchCharacterData()
+                monsterAttack(characterId);
+            })
+            .catch(error => console.error('Error:', error));
+    }
+
+    function monsterAttack(characterId) {
+        fetch('http://localhost:5000/monster_attack', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({character_id: characterId})
+        })
+            .then(response => response.json())
+            .then(data => {
+                const message = data.message;
+                document.getElementById('result').textContent = message;
+                updateBattleLog(message, 'Monstro');
+                fetchCharacterData()
+            })
+            .catch(error => console.error('Error:', error));
+    }
+
+    function rollD20() {
+        return Math.floor(Math.random() * 20) + 1;
+    }
+
+    function updateMonsterStats(monster) {
+        if (monster) {
+            if (monster.attributes.life <= 0 || monster.attributes.life === null) {
+                showVictoryPopup(parseInt(monster.xp));
+            }
+
+            document.getElementById('monsterName').textContent = monster.name;
+            document.getElementById('monsterHealth').textContent = monster.attributes.life;
+            document.getElementById('monsterAttack').textContent = monster.attributes.attack;
+            document.getElementById('monsterDefense').textContent = monster.attributes.defense;
+            document.getElementById('monsterDodge').textContent = monster.attributes.dodge;
+        } else {
+            showVictoryPopup(monster.xp);
+            console.error('Monster data is undefined');
+        }
+    }
+
+    function updateCharacterStats(character) {
+        if (character) {
+
+            if (character.attributes.life <= 0) {
+                showDeathPopup();
+            }
+
+            document.getElementById('characterName').textContent = character.name;
+            document.getElementById('characterHealth').textContent = character.attributes.life;
+            document.getElementById('characterAttack').textContent = character.attributes.attack;
+            document.getElementById('characterDefense').textContent = character.attributes.defense;
+            document.getElementById('characterDodge').textContent = character.attributes.dodge;
+
+
+        } else {
+            showDeathPopup();
+            console.error('Character data is undefined');
+        }
+    }
+
+    let turnCounter = 1;
+
+    function updateBattleLog(message, origin) {
+        let battleLog = JSON.parse(localStorage.getItem('battleLog')) || [];
+        const logEntry = `[${turnCounter}] ${origin}: ${message}`;
+        battleLog.push(logEntry);
+        localStorage.setItem('battleLog', JSON.stringify(battleLog));
+        renderBattleLog();
+        turnCounter++;
+    }
+
+    function loadBattleLog() {
+        renderBattleLog();
+    }
+
+    function renderBattleLog() {
+        const battleLog = JSON.parse(localStorage.getItem('battleLog')) || [];
+        const battleLogElement = document.getElementById('battleLog');
+        battleLogElement.innerHTML = '';
+        battleLog.forEach(log => {
+            const li = document.createElement('li');
+            li.textContent = log;
+            battleLogElement.appendChild(li);
+        });
+    }
+
+    function showVictoryPopup(xp) {
+        alert(`Você venceu! Ganhou ${xp} XP.`);
+        window.location.href = 'information';
+    }
+
+    function showDeathPopup() {
+        alert(`Você morreu!`);
+        window.location.href = 'information';
+    }
+
+    function clearBattleLog() {
+        localStorage.removeItem('battleLog');
+    }
+</script>
+</body>
+</html>
