@@ -13,6 +13,10 @@
 
 Trabalho avaliativo ministrado pelo Prof. Richard referente a disciplina de Técnicas de Programação do curso de Análise e Desenvolvimento de Sistemas da faculdades AEMS.
 
+### Informações adicionais
+1. [One Page de Apresentação](https://excalidraw.com/#json=gnNox39BiP5KSiSEAxRzP,ScrLMnozO39k3eokvne-xw).
+2. O postman centralizando todos os endpoints está na raiz do projeto.
+
 ### Combinados
 
 1. Não mergear na branch main sem code review.
