@@ -1,0 +1,86 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+body {
+    font-family: 'Press Start 2P', cursive;
+    background-image: url('images/backgrounds/castle.png');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    color: #000000;
+    margin: 0;
+    padding: 50px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+h1 {
+    color: #ffbb00;
+    text-shadow: 2px 2px 4px #000000;
+    font-size: 3em;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+#characterInfoContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+    background-color: rgba(0, 0, 0, 0.7);
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.8);
+    margin-top: 20px;
+    max-width: 1000px;
+    width: 100%;
+}
+
+#characterInfo {
+    width: 70%;
+    margin-right: 30px;
+    border-collapse: collapse;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    padding: 20px;
+}
+
+#characterInfo th, #characterInfo td {
+    padding: 10px;
+    text-align: left;
+    color: #ffffff;
+}
+
+#characterInfo th {
+    background-color: #333333;
+    text-shadow: 1px 1px #000000;
+}
+
+#characterInfo td {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+}
+
+#classImage {
+    width: 250px;
+    height: auto;
+    border-radius: 10px;
+    border: 3px solid #ffbb00;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.8);
+}
+
+button {
+    background-color: #ffbb00;
+    color: #000000;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #999999;
+}
