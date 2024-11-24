@@ -1,0 +1,99 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+body {
+    font-family: 'Press Start 2P', cursive;
+    background-image: url('images/backgrounds/castle.png');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    color: #ffffff;
+    margin: 0;
+    padding: 150px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.container {
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    text-align: center;
+}
+
+h1 {
+    color: #ffbb00;
+    text-shadow: 1px 1px #000000;
+    font-size: 2.5em;
+    margin-bottom: 20px;
+}
+
+#battlefield {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+
+#monster, #character {
+    text-align: center;
+}
+
+#monsterImage, #characterImage {
+    width: 150px;
+    height: auto;
+    margin-bottom: 10px;
+}
+
+#statsContainer {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+#monsterStats, #characterStats {
+    width: 45%;
+    background-color: #000000;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+#monsterStats h2, #characterStats h2 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+button {
+    background-color: #ffffff;
+    color: #000000;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin: 10px 0;
+}
+
+button:hover {
+    background-color: #e0a800;
+}
+
+#result {
+    font-size: 1.2rem;
+    margin-top: 20px;
+}
+
+#battleLog {
+    list-style-type: none;
+    padding: 0;
+    font-size: 1rem;
+    margin-top: 20px;
+}
+
+#battleLog li {
+    background-color: #34495e;
+    padding: 8px;
+    border-radius: 5px;
+    margin-bottom: 5px;
+}
