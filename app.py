@@ -88,6 +88,21 @@ def send_image(path):
     return send_from_directory('templates/images', path)
 
 
+@app.route('/information.css')
+def style_information():
+    return send_file('templates/information.css')
+
+
+@app.route('/chest_adventure.css')
+def style_chest_adventure():
+    return send_file('templates/chest_adventure.css')
+
+
+@app.route('/monster_adventure.css')
+def style_monster_adventure():
+    return send_file('templates/monster_adventure.css')
+
+
 # Initialize app (don't change this)
 if __name__ == '__main__':
     if not os.path.exists(DATABASE):
